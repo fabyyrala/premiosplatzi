@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "polls.apps.PollsConfig",#aplicacion creada por nosotros para diferenciar se coloca al principio o al final
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

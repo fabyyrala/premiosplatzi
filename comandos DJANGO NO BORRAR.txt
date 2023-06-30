@@ -1,0 +1,66 @@
+-----------entorno virtual
+python -m venv venv   #Crea un entorno virtual llamado venv
+venv\Scripts\activate  #Activa el entorno virtual 
+venv\Scripts\deactivate  #Desactiva el entorno virtual
+
+---------instalacion de django y creacion de proyecto
+pip install Django #Instala Django
+django-admin startproject premiosplatziapp #Crea un proyecto llamado premiosplatziapp
+cd premiosplatziapp
+python manage.py startapp polls #Crea una app llamada polls
+python manage.py runserver #Corre el servidor
+py manage.py makemigrations polls #Crea las migraciones de la app polls
+python manage.py migrate #Migraciones de la base de datos
+python manage.py createsuperuser #Crea un super usuario
+
+----------------mysql
+pip install mysqlclient #Instala el driver de mysql client
+
+#En el archivo settings.py de la carpeta premiosplatziapp
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "informatorio",
+        "USER": "root",
+        "PASSWORD": "root",
+        "HOST": "localhost",
+        "PORT": "3306",
+    }
+}
+
+----------------Shell de Django
+python manage.py shell #Inicia el shell de Django
+from polls.models import Question, Choice #Importa los modelos (models.py) de la app polls
+from django.utils import timezone #Importa la zona horaria de Django
+Question.objects.all() #Muestra todas las preguntas de la base de datos de la app polls
+#QuerySet[] es una lista de objetos de un modelo, un conjunto de datos
+q = Question(question_text="¿Cual es el mejor curso de plazti?", pub_date=timezone.now()) #Crea una pregunta con la zona horaria actual
+q.save() #Guarda la pregunta en la base de datos
+q.question_text #Muestra el texto de la pregunta creada(__str__)
+q.pub_date #Muestra la fecha de publicacion de la pregunta creada
+Question.(question_text="¿Quien es el mejor profesor de Platzi?", pub_date=timezone.now()).save() #Crea una pregunta con la zona horaria actual y la guarda en la base de datos con save()
+Question.objects.get() #Muestra UN objeto de la base de datos que cumpla con la condicion
+Question.objects.get(id=1) #Muestra el objeto con id=1
+####ERROR -> Question does not exist -> No existe el objeto que cumpla con la condicion
+####ERROR -> Question.MultipleObjectsReturned -> Existen varios objetos que cumplen con la condicion
+Question.objects.filter() #Muestra TODOS los objetos de la base de datos que cumplan con la condicion
+Question.objects.filter(pub_date__year=2020) #Muestra TODOS los objetos que se publicaron en el 2020
+Question.objects.filter(pub_date__year=2020).order_by('pub_date') #Muestra TODOS los objetos que se publicaron en el 2020 ordenados por fecha de publicacion
+Question.objects.filter(pub_date__year=2020).order_by('-pub_date') #Muestra TODOS los objetos que se publicaron en el 2020 ordenados por fecha de publicacion de forma descendente
+Question.objects.filter(pub_date__year=2020).order_by('-pub_date')[0] #Muestra el primer objeto de la lista
+Question.objects.filter()[:5] #Muestra los primeros 5 objetos de la lista
+Question.objects.filter(question_text__startswith='¿') #Muestra los objetos que empiezan con ¿
+q.choice_set.all() #Muestra todas las opciones de la pregunta q
+q.choice_set.create(choice_text='curso basico de python', votes=0) #Crea una opcion de la pregunta q
+q. choice_set.count() #Muestra la cantidad de opciones de la pregunta q
+Choice.objects.filter(question__pub_date__year=timezone.now().year) #Muestra las opciones de las preguntas que se publicaron en el año actual
+Choice.objects.filter(question__pub_date__year=timezone.now().year).count() #Muestra la cantidad de opciones de las preguntas que se publicaron en el año actual
+Choice.objects.filter(question__pub_date__year=timezone.now().year).order_by('-votes') #Muestra las opciones de las preguntas que se publicaron en el año actual ordenadas por votos de forma descendente
+Choice.objects.filter(question__pub_date__year=timezone.now().year).order_by('-votes')[0] #Muestra la primera opcion de las preguntas que se publicaron en el año actual ordenadas por votos de forma descendente
+
+-------- cls en shell de Django
+import os
+os.system('cls')
+
+
+Se crean las vistas en views.py y le linkean las vistas en urls.py a traves de url patterns creandole un path
