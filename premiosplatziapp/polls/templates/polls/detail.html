@@ -1,0 +1,45 @@
+<form action="{% url 'polls:vote' question.id %}" method = "post">
+    {% csrf_token %} <!-- sirve para protegernos de ataques de falsificación de solicitudes entre sitios, con el fin de proteger la información del usuario. -->
+    <fieldset>
+        <legend><h1>{{question.question_text}}</h1></legend>
+        {% if error_message %} <!-- Con esto le digo que si hay un error muestre el error como un mensaje -->
+            <p><strong>{{error_message }}</strong></p>
+        {% endif %}
+        
+        {% for choice in question.choice_set.all %}
+            <input 
+                type="radio" 
+                name="choice"
+                id="choice{{forloop.counter}}" 
+                value="{{choice.id}}"
+            >
+            <!-- type = radio para que solo se pueda seleccionar una opción -->
+            <!-- name = choice para que todas las opciones tengan el mismo nombre y solo se pueda seleccionar una -->
+            <!-- value = {{choice.id}} para que el valor de cada input sea el id de la opción -->
+            <!-- forloop.counter para que cada input tenga un id diferente, y va contando el indice de la lista (id de html, NO el de la preg) -->
+            
+            <label for="choice{{forloop.counter}}">
+                {{choice.choice_text}}
+            </label>
+            <br>
+        {% endfor %}
+    </fieldset>
+<input type="submit" value ="Votar">
+</form>
+
+
+
+
+
+
+
+
+
+<!--<h1>{{ question.question_text }}</h1> 
+<ul>
+  {% for choice in question.choice_set.all %}
+    <li>{{choice.choice_text}}</li>
+  {% endfor %}  
+</ul>-->
+
+

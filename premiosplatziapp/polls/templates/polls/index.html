@@ -1,4 +1,9 @@
-{% if latest_question_list %}
-   
-
+{% if latest_question_list %} 
+   <ul>
+   {% for question  in latest_question_list  %}<!-- url sirve para hacer las urls dinamicas, en este caso se le pasa el nombre de la app y el nombre de la url que se quiere usar, y se le pasa el id de la pregunta que se quiere usar, ya que es el argumento que se le pasó a la url en el archivo urls.py de la app polls -->
+      <li><a href="{% url 'polls:detail' question.id %}">{{question.question_text}}</a></li>
+   {% endfor %}   
+   </ul>
+{% else %}
+   <p>No polls are available</p>
 {% endif %}
