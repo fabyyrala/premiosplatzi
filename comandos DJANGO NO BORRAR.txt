@@ -3,6 +3,9 @@ python -m venv venv   #Crea un entorno virtual llamado venv
 venv\Scripts\activate  #Activa el entorno virtual 
 venv\Scripts\deactivate  #Desactiva el entorno virtual
 
+###el entorno sirve par aque django se instale en el entorno y no en el sistema operativo, para que no se mezclen las versiones de django en distintos proyectos
+
+
 ---------instalacion de django y creacion de proyecto
 pip install Django #Instala Django
 django-admin startproject premiosplatziapp #Crea un proyecto llamado premiosplatziapp
@@ -12,6 +15,9 @@ python manage.py runserver #Corre el servidor
 py manage.py makemigrations polls #Crea las migraciones de la app polls
 python manage.py migrate #Migraciones de la base de datos
 python manage.py createsuperuser #Crea un super usuario
+
+------------------------
+#iniciar terminal de python 
 
 ----------------mysql
 pip install mysqlclient #Instala el driver de mysql client
@@ -62,5 +68,35 @@ Choice.objects.filter(question__pub_date__year=timezone.now().year).order_by('-v
 import os
 os.system('cls')
 
+---------------------------------Vistas
+#<int:> significa que va a recibir un entero, es la manera que tiene django de saber que es una variable
+#<str:> significa que va a recibir un string, es la manera que tiene django de saber que es una variable
+## se crean las vistas en views.py, y se linkean en urls.py de polls 
 
-Se crean las vistas en views.py y le linkean las vistas en urls.py a traves de url patterns creandole un path
+---------------------------------Templates
+#se crea dentro de polls una carpeta llamada templates, y dentro de esta otra llamada polls
+#esto se hace para que django sepa que es un template de la app polls y que no se confunda con otro template de otra app con el mismo nombre, cuando las convine en una sola carpeta (lo hace solo)
+#django trabaja con templates de html para eso usa el lenguaje de programacion  django template sistem (DTS)
+#para usar DTS se debe crear un archivo html y se debe poner en la primera linea {% load static %} para que django sepa que es un template de DTS
+instalar extension django en vs code
+archivo html >>> if + tab >>> {% if %} {% endif %}
+
+
+----------------.gitignore
+#se crea un archivo .gitignore en la raiz del proyecto
+#se agrega la carpeta venv/ para que git ignore la carpeta venv
+
+---------------------requeriments.txt
+#se crea un archivo requeriments.txt en la raiz del proyecto
+#se agrega el comando::    pip freeze > requeriments.txt     ::para que se guarden las dependencias del proyecto en el archivo requeriments.txt
+
+#se agrega el comando::     pip install -r requeriments.txt     ::para que se instalen las dependencias del proyecto desde el archivo requeriments.txt
+
+---------------------django-template
+https://docs.djangoproject.com/en/4.0/ref/templates/builtins/  #Documentacion de Django Template System
+https://ccbv.co.uk/ #Documentacion de Django Class Based Views (CBV)
+
+Modelo Vista Templates
+1° creo el views.py y lo programo
+2° Anexar vistas al archivo urls.py
+3° crear el template.html

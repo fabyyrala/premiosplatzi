@@ -4,7 +4,7 @@ from django.shortcuts import render,get_object_or_404 #get_object_or_404 es una 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
-
+from django.utils import timezone
 
 from .models import Question, Choice
 
@@ -34,9 +34,9 @@ class IndexView(generic.ListView):
     template_name="polls/index.html"  ##especifica el template que va a usar la vista
     context_object_name = "latest_question_list"##especifica el nombre de la variable que va a contener la lista de objetos que se van a mostrar en el template
     
-    def get_queryset(self): ##sobreescribe el método get_queryset para que devuelva las últimas 5 preguntas
+    def get_queryset(self): ##sobreescribe el método get_queryset para que devuelva las últimas 5 preguntas del momento actual
         '''Return the last five published questions.'''
-        return Question.objects.order_by("-pub_date")[:5]
+        return Question.objects.filter(pub_date__lte=timezone.now()).order_by("-pub_date")[:5]
     
 class DetailView(generic.DetailView):
     model = Question
