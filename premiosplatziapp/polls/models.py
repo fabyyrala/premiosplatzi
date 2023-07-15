@@ -2,6 +2,7 @@ import datetime
 
 from django.db import models
 from django.utils import timezone
+
 # Create your models here.
 
 class Question(models.Model):
@@ -13,10 +14,8 @@ class Question(models.Model):
    
    def was_published_recently(self):
        #Nos dice si la fecha de publicacion es mayor a la fecha actual , puede tener un dia como maximo de actualizacion
-       return self.pub_date >= timezone.now() - datetime.timedelta(days=1) #Timedelta es un objeto que nos define una diferencia de tiempo
+       return timezone.now() >= self.pub_date >= timezone.now() - datetime.timedelta(days=1) #Timedelta es un objeto que nos define una diferencia de tiempo
        
-
-
 
 
 class Choice(models.Model):
